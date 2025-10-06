@@ -1,39 +1,43 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { ArrowRight, Play } from "lucide-react"
-import { useEffect, useRef } from "react"
-import { motion, useScroll, useTransform } from "framer-motion"
+import { Button } from "@/components/ui/button";
+import { ArrowRight, Play } from "lucide-react";
+import { useEffect, useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { colorThemes } from "@/lib/theme-config";
+import { useTheme } from "@/contexts/theme-context";
 
 export function HeroSection() {
-  const sectionRef = useRef<HTMLDivElement>(null)
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const { colorTheme } = useTheme();
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end start"],
-  })
+  });
 
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"])
-  const opacity = useTransform(scrollYProgress, [0, 1], [1, 0])
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+  const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
 
-  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const gradientClass = colorThemes[colorTheme].gradient;
 
   useEffect(() => {
-    const canvas = canvasRef.current
-    if (!canvas) return
+    const canvas = canvasRef.current;
+    if (!canvas) return;
 
-    const ctx = canvas.getContext("2d")
-    if (!ctx) return
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
 
-    canvas.width = window.innerWidth
-    canvas.height = window.innerHeight
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
     const particles: Array<{
-      x: number
-      y: number
-      vx: number
-      vy: number
-      size: number
-    }> = []
+      x: number;
+      y: number;
+      vx: number;
+      vy: number;
+      size: number;
+    }> = [];
 
     for (let i = 0; i < 50; i++) {
       particles.push({
@@ -42,61 +46,54 @@ export function HeroSection() {
         vx: (Math.random() - 0.5) * 0.5,
         vy: (Math.random() - 0.5) * 0.5,
         size: Math.random() * 3 + 1,
-      })
+      });
     }
 
     function animate() {
-      if (!ctx || !canvas) return
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      if (!ctx || !canvas) return;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       particles.forEach((particle) => {
-        particle.x += particle.vx
-        particle.y += particle.vy
+        particle.x += particle.vx;
+        particle.y += particle.vy;
 
-        if (particle.x < 0 || particle.x > canvas.width) particle.vx *= -1
-        if (particle.y < 0 || particle.y > canvas.height) particle.vy *= -1
+        if (particle.x < 0 || particle.x > canvas.width) particle.vx *= -1;
+        if (particle.y < 0 || particle.y > canvas.height) particle.vy *= -1;
 
-        ctx.beginPath()
-        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2)
-        ctx.fillStyle = "rgba(124, 58, 237, 0.3)"
-        ctx.fill()
-      })
+        ctx.beginPath();
+        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+        ctx.fillStyle = "rgba(124, 58, 237, 0.3)";
+        ctx.fill();
+      });
 
-      requestAnimationFrame(animate)
+      requestAnimationFrame(animate);
     }
 
-    animate()
+    animate();
 
     const handleResize = () => {
-      canvas.width = window.innerWidth
-      canvas.height = window.innerHeight
-    }
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
 
-    window.addEventListener("resize", handleResize)
-    return () => window.removeEventListener("resize", handleResize)
-  }, [])
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
-    <section ref={sectionRef} className="relative h-screen flex items-center overflow-hidden">
+    <section
+      ref={sectionRef}
+      className="relative h-screen flex items-center overflow-hidden"
+    >
       {/* Animated Background */}
-      {/* <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-secondary/10 to-accent/10 animate-gradient" /> */}
-      <canvas ref={canvasRef} className="absolute inset-0 opacity-40" />
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(111.84deg, #FBFBFB 34.62%, rgba(131, 58, 180, 0.22) 66.09%, rgba(252, 176, 69, 0.5) 95.33%)",
+        }}
+      />
 
-      {/* Gradient Orbs with parallax */}
-      {/* <motion.div
-        style={{ y }}
-        className="absolute top-1/4 left-1/4 w-64 h-64 sm:w-96 sm:h-96 bg-primary/20 rounded-full blur-3xl"
-        animate={{
-          x: [0, 50, 0],
-          y: [0, 30, 0],
-          scale: [1, 1.2, 1],
-        }}
-        transition={{
-          duration: 8,
-          repeat: Number.POSITIVE_INFINITY,
-          ease: "easeInOut",
-        }}
-      /> */}
       <motion.div
         style={{ y: useTransform(scrollYProgress, [0, 1], ["0%", "30%"]) }}
         className="absolute bottom-1/4 right-1/4 w-64 h-64 sm:w-96 sm:h-96 bg-secondary/20 rounded-full blur-3xl"
@@ -113,7 +110,10 @@ export function HeroSection() {
         }}
       />
 
-      <motion.div style={{ opacity }} className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
+      <motion.div
+        style={{ opacity }}
+        className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8"
+      >
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Left Column - Content */}
           <div className="space-y-6 sm:space-y-8">
@@ -147,8 +147,10 @@ export function HeroSection() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-base sm:text-lg text-muted-foreground leading-relaxed text-pretty"
             >
-              Hoover Analytica is a powerful, map-based application designed for pharmaceutical companies to analyze
-              customer sales, monitor doctor performance, track sales force activities, and make data-driven decisions.
+              Hoover Analytica is a powerful, map-based application designed for
+              pharmaceutical companies to analyze customer sales, monitor doctor
+              performance, track sales force activities, and make data-driven
+              decisions.
             </motion.p>
 
             <motion.div
@@ -157,20 +159,25 @@ export function HeroSection() {
               transition={{ duration: 0.6, delay: 0.3 }}
               className="flex flex-col sm:flex-row items-start sm:items-center gap-4"
             >
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
                 <Button
-                  size="lg"
-                  className="bg-gradient-to-r from-primary via-secondary to-accent hover:opacity-90 transition-all group w-full sm:w-auto shadow-xl hover:shadow-2xl"
+                  className={`bg-gradient-to-r ${gradientClass} hover:opacity-90 transition-opacity shadow-lg hover:shadow-xl`}
                 >
                   Request a Demo
                   <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </motion.div>
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
                 <Button
                   size="lg"
                   variant="outline"
-                  className="border-2 hover:bg-primary/5 transition-all group w-full sm:w-auto bg-transparent"
+                  className="border-2 hover:text-black hover:bg-primary/5 transition-all group w-full sm:w-auto bg-transparent"
                 >
                   <Play className="mr-2 w-4 h-4 group-hover:scale-110 transition-transform" />
                   Explore Features
@@ -202,5 +209,5 @@ export function HeroSection() {
         </div>
       </motion.div>
     </section>
-  )
+  );
 }

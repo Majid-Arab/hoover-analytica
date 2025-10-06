@@ -1,47 +1,40 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Menu, X } from "lucide-react"
-import { motion, useScroll, useSpring } from "framer-motion"
-import { ThemeSwitcher } from "@/components/theme-switcher"
-import { useTheme } from "@/contexts/theme-context"
-import { colorThemes } from "@/lib/theme-config"
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Menu, X } from "lucide-react";
+import { motion, useScroll, useSpring } from "framer-motion";
+import { ThemeSwitcher } from "@/components/theme-switcher";
+import { useTheme } from "@/contexts/theme-context";
+import { colorThemes } from "@/lib/theme-config";
 
 export function Navigation() {
-  const [isScrolled, setIsScrolled] = useState(false)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const { colorTheme } = useTheme()
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { colorTheme } = useTheme();
 
-  const { scrollYProgress } = useScroll()
+  const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
     damping: 30,
     restDelta: 0.001,
-  })
+  });
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20)
-    }
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     setIsScrolled(window.scrollY > 20);
+  //   };
+  //   window.addEventListener("scroll", handleScroll);
+  //   return () => window.removeEventListener("scroll", handleScroll);
+  // }, []);
 
-  const gradientClass = colorThemes[colorTheme].gradient
+  const gradientClass = colorThemes[colorTheme].gradient;
 
   return (
     <>
-      <motion.div
-        className={`fixed top-0 left-0 right-0 h-1 bg-gradient-to-r ${gradientClass} origin-left z-[60]`}
-        style={{ scaleX }}
-      />
-
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled ? "bg-background/80 backdrop-blur-lg border-b border-border shadow-lg" : "bg-transparent"
-        }`}
+        className={`absolute top-0 left-0 right-0 z-50 transition-all duration-300 bg-transparent`}
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 sm:h-20">
@@ -69,32 +62,47 @@ export function Navigation() {
                   className={`absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r ${gradientClass} group-hover:w-full transition-all duration-300`}
                 />
               </Link>
-              <Link href="#pricing" className="text-sm font-medium hover:text-primary transition-colors relative group">
+              <Link
+                href="#pricing"
+                className="text-sm font-medium hover:text-primary transition-colors relative group"
+              >
                 Pricing
                 <span
                   className={`absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r ${gradientClass} group-hover:w-full transition-all duration-300`}
                 />
               </Link>
-              <Link href="#about" className="text-sm font-medium hover:text-primary transition-colors relative group">
+              <Link
+                href="#about"
+                className="text-sm font-medium hover:text-primary transition-colors relative group"
+              >
                 About
                 <span
                   className={`absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r ${gradientClass} group-hover:w-full transition-all duration-300`}
                 />
               </Link>
-              <Link href="/blog" className="text-sm font-medium hover:text-primary transition-colors relative group">
+              <Link
+                href="/blog"
+                className="text-sm font-medium hover:text-primary transition-colors relative group"
+              >
                 Blog
                 <span
                   className={`absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r ${gradientClass} group-hover:w-full transition-all duration-300`}
                 />
               </Link>
-              <Link href="#contact" className="text-sm font-medium hover:text-primary transition-colors relative group">
+              <Link
+                href="#contact"
+                className="text-sm font-medium hover:text-primary transition-colors relative group"
+              >
                 Contact
                 <span
                   className={`absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r ${gradientClass} group-hover:w-full transition-all duration-300`}
                 />
               </Link>
               <ThemeSwitcher />
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
                 <Button
                   className={`bg-gradient-to-r ${gradientClass} hover:opacity-90 transition-opacity shadow-lg hover:shadow-xl`}
                 >
@@ -112,7 +120,11 @@ export function Navigation() {
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 aria-label="Toggle menu"
               >
-                {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                {isMobileMenuOpen ? (
+                  <X className="w-6 h-6" />
+                ) : (
+                  <Menu className="w-6 h-6" />
+                )}
               </motion.button>
             </div>
           </div>
@@ -161,7 +173,9 @@ export function Navigation() {
                 >
                   Contact
                 </Link>
-                <Button className={`bg-gradient-to-r ${gradientClass} hover:opacity-90 transition-opacity w-full`}>
+                <Button
+                  className={`bg-gradient-to-r ${gradientClass} hover:opacity-90 transition-opacity w-full`}
+                >
                   Request a Demo
                 </Button>
               </div>
@@ -170,5 +184,5 @@ export function Navigation() {
         </div>
       </nav>
     </>
-  )
+  );
 }
