@@ -60,7 +60,7 @@ export function WhyChooseSection() {
   }, [])
 
   return (
-    <section ref={sectionRef} className="py-20 relative overflow-hidden bg-background">
+    <section ref={sectionRef} className="py-50 relative overflow-hidden bg-background">
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
 
       {/* Background Elements */}
