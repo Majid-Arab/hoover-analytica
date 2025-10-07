@@ -100,71 +100,74 @@ export function FeaturesSection() {
     <section
       id="features"
       ref={sectionRef}
-      className="min-h-screen py-20 relative overflow-hidden bg-background"
+      className="py-20 bg-background"
     >
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
 
-      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-12 gap-12 items-start">
-          <motion.div
-            ref={headingRef}
-            style={{ y: headingY, opacity: headingOpacity }}
-            className="lg:col-span-4 lg:sticky lg:top-32 space-y-6"
-          >
+      <div className="z-10 container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex">
+          <div>
             <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
+              // ref={headingRef}
+              // style={{ y: headingY, opacity: headingOpacity }}
+              className="sticky top-50 space-y-6"
             >
-              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-balance leading-tight">
-                Powerful{" "}
-                <span className="bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
-                  Features
-                </span>{" "}
-                for Your Success
-              </h2>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                Everything you need to manage pharmaceutical sales operations
-                efficiently
-              </p>
+              <motion.div
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+              >
+                <h2 className="text-4xl md:text-5xl font-bold mb-6 text-balance leading-tight">
+                  Powerful{" "}
+                  <span className="bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
+                    Features
+                  </span>{" "} <br />
+                  for Your Success
+                </h2>
+                <p className="text-lg text-muted-foreground leading-relaxed">
+                  Everything you need to manage pharmaceutical sales <br /> operations
+                  efficiently
+                </p>
+              </motion.div>
+
+              {/* Feature navigation dots */}
+              <div className="hidden lg:flex flex-col gap-4">
+                {features.map((feature, index) => (
+                  <button
+                    key={index}
+                    onClick={() => {
+                      const card = document.querySelector(
+                        `[data-index="${index}"]`
+                      );
+                      card?.scrollIntoView({
+                        behavior: "smooth",
+                        block: "center",
+                      });
+                    }}
+                    className={`text-left transition-all duration-300 ${
+                      activeCard === index
+                        ? "opacity-100"
+                        : "opacity-40 hover:opacity-70"
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div
+                        className={`h-1 rounded-full transition-all duration-300 ${
+                          activeCard === index
+                            ? "w-12 bg-gradient-to-r from-primary to-secondary"
+                            : "w-6 bg-border"
+                        }`}
+                      />
+                      <span className="text-sm font-medium">
+                        {feature.title}
+                      </span>
+                    </div>
+                  </button>
+                ))}
+              </div>
             </motion.div>
-
-            {/* Feature navigation dots */}
-            <div className="hidden lg:flex flex-col gap-4">
-              {features.map((feature, index) => (
-                <button
-                  key={index}
-                  onClick={() => {
-                    const card = document.querySelector(
-                      `[data-index="${index}"]`
-                    );
-                    card?.scrollIntoView({
-                      behavior: "smooth",
-                      block: "center",
-                    });
-                  }}
-                  className={`text-left transition-all duration-300 ${
-                    activeCard === index
-                      ? "opacity-100"
-                      : "opacity-40 hover:opacity-70"
-                  }`}
-                >
-                  <div className="flex items-center gap-3">
-                    <div
-                      className={`h-1 rounded-full transition-all duration-300 ${
-                        activeCard === index
-                          ? "w-12 bg-gradient-to-r from-primary to-secondary"
-                          : "w-6 bg-border"
-                      }`}
-                    />
-                    <span className="text-sm font-medium">{feature.title}</span>
-                  </div>
-                </button>
-              ))}
-            </div>
-          </motion.div>
-
+          </div>
           <div className="lg:col-span-8 space-y-8">
             {features.map((feature, index) => {
               const Icon = feature.icon;
