@@ -83,7 +83,7 @@ export function HeroSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative h-screen flex items-center overflow-hidden"
+      className="relative h-screen flex items-center mt-20 md:mt-60 lg:mt-0"
     >
       <motion.div
         style={{ y: useTransform(scrollYProgress, [0, 1], ["0%", "30%"]) }}
