@@ -97,11 +97,7 @@ export function FeaturesSection() {
   }, []);
 
   return (
-    <section
-      id="features"
-      ref={sectionRef}
-      className="py-20 bg-background"
-    >
+    <section id="features" ref={sectionRef} className="py-20 bg-background">
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
 
       <div className="z-10 container mx-auto px-4 sm:px-6 lg:px-8">
@@ -110,7 +106,7 @@ export function FeaturesSection() {
             <motion.div
               // ref={headingRef}
               // style={{ y: headingY, opacity: headingOpacity }}
-              className="sticky top-50 space-y-6"
+              className="sticky top-50 pb-32 space-y-6"
             >
               <motion.div
                 initial={{ opacity: 0, x: -50 }}
@@ -122,12 +118,13 @@ export function FeaturesSection() {
                   Powerful{" "}
                   <span className="bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
                     Features
-                  </span>{" "} <br />
+                  </span>{" "}
+                  <br />
                   for Your Success
                 </h2>
                 <p className="text-lg text-muted-foreground leading-relaxed">
-                  Everything you need to manage pharmaceutical sales <br /> operations
-                  efficiently
+                  Everything you need to manage pharmaceutical sales <br />{" "}
+                  operations efficiently
                 </p>
               </motion.div>
 
@@ -172,14 +169,27 @@ export function FeaturesSection() {
             {features.map((feature, index) => {
               const Icon = feature.icon;
 
+              const targetScale = 1 - (features.length - index) * 0.05;
+              const imageScale = useTransform(scrollYProgress, [0, 1], [2, 1]);
+              const scale = useTransform(
+                scrollYProgress,
+                [index * 0.25, 1],
+                [1, targetScale]
+              );
+
               return (
                 <motion.div
                   key={index}
                   data-index={index}
+                  style={{
+                    scale,
+                    top: `calc(-5vh + ${100 + index * 25}px)`,
+                  }}
                   initial={{ opacity: 0, y: 50 }}
-                  whileInView={{ opacity: 1, y: 0 }}
+                  whileInView={{ opacity: 1, y: 0.5 }}
                   viewport={{ once: true, margin: "-100px" }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
+                  className="sticky top-20"
                 >
                   <Card className="group relative p-8 overflow-hidden border-2 hover:border-primary/50 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/20">
                     {/* Animated Gradient Background */}
@@ -225,8 +235,9 @@ export function FeaturesSection() {
 
                         {/* Feature Image */}
                         <div className="w-full h-64 rounded-xl overflow-hidden border border-border group-hover:border-primary/50 transition-all duration-500">
-                          <img
-                            src={`/.jpg?height=400&width=600&query=${feature.image}`}
+                          <motion.img
+                            src={`/pharmaceutical-sales-analytics-dashboard-with-inte.jpg`}
+                            style={{ scale: imageScale }}
                             alt={feature.title}
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                           />
