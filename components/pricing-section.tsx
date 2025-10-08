@@ -9,7 +9,7 @@ const pricingPlans = [
   {
     name: "Starter",
     icon: Zap,
-    price: "Contact Us",
+    price: "$200",
     description: "Perfect for small pharmaceutical teams",
     features: [
       "Up to 50 sales representatives",
@@ -25,15 +25,13 @@ const pricingPlans = [
   {
     name: "Professional",
     icon: Building2,
-    price: "Contact Us",
+    price: "$500",
     description: "Ideal for growing companies",
     features: [
       "Up to 200 sales representatives",
       "Advanced analytics & heatmaps",
       "Territory demarcation (Bricks)",
       "Real-time tracking",
-      "Custom reports & exports",
-      "Priority support",
       "API access",
       "Multi-city deployment",
     ],
@@ -43,15 +41,13 @@ const pricingPlans = [
   {
     name: "Enterprise",
     icon: Rocket,
-    price: "Custom",
+    price: "$800",
     description: "Comprehensive solution for large organizations",
     features: [
       "Unlimited sales representatives",
       "Full analytics suite",
       "Advanced territory management",
       "Predictive analytics & AI insights",
-      "White-label options",
-      "Dedicated account manager",
       "Custom integrations",
       "On-premise deployment option",
       "24/7 premium support",
@@ -132,16 +128,16 @@ export function PricingSection() {
                       className={`w-14 h-14 rounded-2xl border-2 bg-gradient-to-br ${plan.gradient} p-[2px] flex items-center justify-center mb-4 shadow-lg`}
                     >
                       <div className="w-full h-full rounded-xl bg-card flex items-center justify-center">
-                        <Icon className={`w-7 h-7 bg-gradient-to-br ${plan.gradient} bg-clip-text text-transparent`} />
+                        <Icon className={`w-7 h-7 bg-gradient-to-br ${plan.gradient} bg-clip-text`} />
                       </div>
                     </motion.div>
 
                     {/* Plan name */}
-                    <h3 className="text-2xl font-bold text-foreground mb-2">{plan.name}</h3>
+                    <h3 className="text-xl font-semibold text-foreground mb-2">{plan.name}</h3>
 
                     {/* Price */}
                     <div className="mb-3">
-                      <span className="text-3xl font-bold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
+                      <span className="text-3xl font-bold ">
                         {plan.price}
                       </span>
                     </div>
