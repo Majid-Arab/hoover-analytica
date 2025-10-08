@@ -62,7 +62,6 @@ const features = [
 
 export function FeaturesSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const headingRef = useRef<HTMLDivElement>(null);
   const [activeCard, setActiveCard] = useState(0);
 
   const { scrollYProgress } = useScroll({
@@ -70,43 +69,16 @@ export function FeaturesSection() {
     offset: ["start end", "end start"],
   });
 
-  const headingY = useTransform(scrollYProgress, [0, 0.5, 1], [100, 0, -100]);
-  const headingOpacity = useTransform(
-    scrollYProgress,
-    [0, 0.2, 0.8, 1],
-    [0, 1, 1, 0]
-  );
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry, index) => {
-          if (entry.isIntersecting) {
-            const cardIndex = Number(entry.target.getAttribute("data-index"));
-            setActiveCard(cardIndex);
-          }
-        });
-      },
-      { threshold: 0.6 }
-    );
-
-    const cards = sectionRef.current?.querySelectorAll("[data-index]");
-    cards?.forEach((card) => observer.observe(card));
-
-    return () => observer.disconnect();
-  }, []);
-
   return (
     <section id="features" ref={sectionRef} className="py-20 bg-background">
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
 
       <div className="z-10 container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex">
+        <div className="flex flex-col lg:flex-row">
+
           <div>
             <motion.div
-              // ref={headingRef}
-              // style={{ y: headingY, opacity: headingOpacity }}
-              className="sticky top-50 pb-32 space-y-6"
+              className="lg:sticky lg:top-50 lg:pb-32 space-y-6"
             >
               <motion.div
                 initial={{ opacity: 0, x: -50 }}
