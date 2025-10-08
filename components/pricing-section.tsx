@@ -21,7 +21,6 @@ const pricingPlans = [
       "Email support",
       "Mobile app access",
     ],
-    gradient: "from-purple-500 to-pink-500",
     popular: false,
   },
   {
@@ -37,7 +36,6 @@ const pricingPlans = [
       "API access",
       "Multi-city deployment",
     ],
-    gradient: "from-pink-500 to-orange-500",
     popular: true,
   },
   {
@@ -54,7 +52,6 @@ const pricingPlans = [
       "On-premise deployment option",
       "24/7 premium support",
     ],
-    gradient: "from-orange-500 to-purple-500",
     popular: false,
   },
 ];
@@ -134,7 +131,7 @@ export function PricingSection() {
                   <div className="relative p-6 flex flex-col flex-1">
                     <motion.div
                       whileHover={{ scale: 1.1, rotate: 5 }}
-                      className={`w-14 h-14 rounded-2xl border-2 bg-gradient-to-br ${plan.gradient} p-[2px] flex items-center justify-center mb-4 shadow-lg`}
+                      className={`w-14 h-14 rounded-2xl border-2 bg-gradient-to-br p-[2px] flex items-center justify-center mb-4 shadow-lg`}
                     >
                       <div className="w-full h-full rounded-xl bg-card flex items-center justify-center">
                         <Icon className="w-7 h-7 text-primary" />
@@ -183,12 +180,7 @@ export function PricingSection() {
                       className="mt-auto"
                     >
                       <Button
-                        className={`w-full ${
-                          plan.popular
-                            ? "bg-gradient-to-r from-pink-500 to-orange-500 hover:from-pink-600 hover:to-orange-600"
-                            : "bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700"
-                        } text-white shadow-lg hover:shadow-xl transition-all duration-300`}
-                        size="lg"
+                        className={`bg-gradient-to-r ${gradientClass} w-full hover:opacity-90 transition-opacity shadow-lg hover:shadow-xl`}
                       >
                         Get Started
                       </Button>
