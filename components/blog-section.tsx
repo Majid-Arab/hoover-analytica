@@ -1,10 +1,12 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { ArrowRight, Calendar, Clock, BookOpen } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
-import Link from "next/link"
+import { motion } from "framer-motion";
+import { ArrowRight, Calendar, Clock, BookOpen } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import Link from "next/link";
+import { useTheme } from "@/contexts/theme-context";
+import { colorThemes } from "@/lib/theme-config";
 
 const blogPosts = [
   {
@@ -16,7 +18,8 @@ const blogPosts = [
     readTime: "5 min read",
     category: "Industry Insights",
     gradient: "from-purple-500 to-pink-500",
-    image: "modern pharmaceutical analytics dashboard with interactive maps and data visualizations",
+    image:
+      "modern pharmaceutical analytics dashboard with interactive maps and data visualizations",
   },
   {
     slug: "optimizing-territory-management-with-geotagging",
@@ -38,13 +41,20 @@ const blogPosts = [
     readTime: "6 min read",
     category: "Technology",
     gradient: "from-orange-500 to-purple-500",
-    image: "real-time sales dashboard with live data updates and performance metrics",
+    image:
+      "real-time sales dashboard with live data updates and performance metrics",
   },
-]
+];
 
 export function BlogSection() {
+  const { colorTheme } = useTheme();
+  const gradientClass = colorThemes[colorTheme].gradient;
+
   return (
-    <section id="blog" className="relative py-32 overflow-hidden bg-gradient-to-br from-slate-50 to-slate-100">
+    <section
+      id="blog"
+      className="relative py-32 overflow-hidden bg-gradient-to-br from-slate-50 to-slate-100"
+    >
       {/* Animated background pattern */}
       <div className="absolute inset-0 opacity-20">
         <div
@@ -88,14 +98,17 @@ export function BlogSection() {
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-purple-100 to-pink-100 mb-6"
           >
             <BookOpen className="w-4 h-4 text-purple-600" />
-            <span className="text-sm font-medium text-purple-900">Insights & Updates</span>
+            <span className="text-sm font-medium text-purple-900">
+              Insights & Updates
+            </span>
           </motion.div>
 
           <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 bg-clip-text text-transparent">
             Latest from Our Blog
           </h2>
           <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-            Stay updated with the latest trends, insights, and best practices in pharmaceutical sales analytics
+            Stay updated with the latest trends, insights, and best practices in
+            pharmaceutical sales analytics
           </p>
         </motion.div>
 
@@ -146,7 +159,9 @@ export function BlogSection() {
                       {post.title}
                     </h3>
 
-                    <p className="text-slate-600 mb-4 leading-relaxed">{post.excerpt}</p>
+                    <p className="text-slate-600 mb-4 leading-relaxed">
+                      {post.excerpt}
+                    </p>
 
                     <motion.div
                       whileHover={{ x: 5 }}
@@ -174,7 +189,7 @@ export function BlogSection() {
             <Button
               size="lg"
               variant="outline"
-              className="border-2 border-purple-600 text-purple-600 hover:bg-purple-600 hover:text-white px-8 py-6 text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 bg-transparent"
+              className={`border-2 border-primary hover:border-none bg-white text-primary hover:text-white hover:bg-gradient-to-r hover:${gradientClass} px-8 py-6 text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 bg-transparent`}
             >
               View All Articles
               <ArrowRight className="w-5 h-5 ml-2" />
@@ -183,5 +198,5 @@ export function BlogSection() {
         </motion.div>
       </div>
     </section>
-  )
+  );
 }
