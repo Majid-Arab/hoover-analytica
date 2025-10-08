@@ -1,7 +1,7 @@
 export const colorThemes = {
   business: {
     name: "Business (Recommended)",
-    primary: "rgba(167, 24, 98, 1)", // Heading color
+    primary: "#A71862", // Heading color
     secondary: "#833AB4FC", // Purple from gradient
     secondaryRed: "#FD1D1D", // Red from gradient
     accent: "#FCB045", // Orange from gradient

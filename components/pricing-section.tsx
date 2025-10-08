@@ -1,9 +1,11 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { Check, Zap, Building2, Rocket } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
+import { motion } from "framer-motion";
+import { Check, Zap, Building2, Rocket } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { useTheme } from "@/contexts/theme-context";
+import { colorThemes } from "@/lib/theme-config";
 
 const pricingPlans = [
   {
@@ -55,9 +57,12 @@ const pricingPlans = [
     gradient: "from-orange-500 to-purple-500",
     popular: false,
   },
-]
+];
 
 export function PricingSection() {
+  const { colorTheme } = useTheme();
+  const gradientClass = colorThemes[colorTheme].gradient;
+
   return (
     <section
       id="pricing"
@@ -98,7 +103,7 @@ export function PricingSection() {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {pricingPlans.map((plan, index) => {
-            const Icon = plan.icon
+            const Icon = plan.icon;
             return (
               <motion.div
                 key={index}
@@ -106,7 +111,11 @@ export function PricingSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="relative flex"
+                className={`relative flex ${
+                  index === pricingPlans.length - 1
+                    ? "md:col-span-2 md:justify-center lg:col-span-1"
+                    : ""
+                }`}
               >
                 {/* Popular badge */}
                 {plan.popular && (
@@ -128,22 +137,24 @@ export function PricingSection() {
                       className={`w-14 h-14 rounded-2xl border-2 bg-gradient-to-br ${plan.gradient} p-[2px] flex items-center justify-center mb-4 shadow-lg`}
                     >
                       <div className="w-full h-full rounded-xl bg-card flex items-center justify-center">
-                        <Icon className={`w-7 h-7 bg-gradient-to-br ${plan.gradient} bg-clip-text`} />
+                        <Icon className="w-7 h-7 text-primary" />
                       </div>
                     </motion.div>
 
                     {/* Plan name */}
-                    <h3 className="text-xl font-semibold text-foreground mb-2">{plan.name}</h3>
+                    <h3 className="text-xl font-semibold text-foreground mb-2">
+                      {plan.name}
+                    </h3>
 
                     {/* Price */}
                     <div className="mb-3">
-                      <span className="text-3xl font-bold ">
-                        {plan.price}
-                      </span>
+                      <span className="text-3xl font-bold ">{plan.price}</span>
                     </div>
 
                     {/* Description */}
-                    <p className="text-muted-foreground mb-6 text-sm leading-relaxed">{plan.description}</p>
+                    <p className="text-muted-foreground mb-6 text-sm leading-relaxed">
+                      {plan.description}
+                    </p>
 
                     {/* Features - flex-1 to push button to bottom */}
                     <ul className="space-y-2.5 mb-6 flex-1">
@@ -159,12 +170,18 @@ export function PricingSection() {
                           <div className="flex-shrink-0 w-5 h-5 rounded-full bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center mt-0.5">
                             <Check className="w-3 h-3 text-white" />
                           </div>
-                          <span className="text-foreground text-sm leading-relaxed">{feature}</span>
+                          <span className="text-foreground text-sm leading-relaxed">
+                            {feature}
+                          </span>
                         </motion.li>
                       ))}
                     </ul>
 
-                    <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="mt-auto">
+                    <motion.div
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      className="mt-auto"
+                    >
                       <Button
                         className={`w-full ${
                           plan.popular
@@ -179,7 +196,7 @@ export function PricingSection() {
                   </div>
                 </Card>
               </motion.div>
-            )
+            );
           })}
         </div>
 
@@ -191,18 +208,22 @@ export function PricingSection() {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="text-center mt-12"
         >
-          <p className="text-muted-foreground mb-4">Need a custom solution? Contact our sales team.</p>
-          <Button
-            size="lg"
-            variant="outline"
-            className="border-2 border-primary text-primary hover:bg-primary hover:text-white px-8 rounded-full transition-all duration-300 hover:scale-105 bg-transparent"
-          >
-            Contact Sales
-          </Button>
+          <p className="text-muted-foreground mb-4">
+            Need a custom solution? Contact our sales team.
+          </p>
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <Button
+              size="lg"
+              variant="outline"
+              className={`border-2 border-primary hover:border-none bg-white text-primary hover:text-white hover:bg-gradient-to-r hover:${gradientClass} hover:opacity-90 px-8 rounded-full transition-opacity shadow-lg hover:shadow-xl`}
+            >
+              Contact Sales
+            </Button>
+          </motion.div>
         </motion.div>
       </div>
 
       <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
     </section>
-  )
+  );
 }
