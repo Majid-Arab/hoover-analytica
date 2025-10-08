@@ -85,15 +85,6 @@ export function HeroSection() {
       ref={sectionRef}
       className="relative h-screen flex items-center overflow-hidden"
     >
-      {/* Animated Background */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background:
-            "linear-gradient(111.84deg, #FBFBFB 34.62%, rgba(131, 58, 180, 0.22) 66.09%, rgba(252, 176, 69, 0.5) 95.33%)",
-        }}
-      />
-
       <motion.div
         style={{ y: useTransform(scrollYProgress, [0, 1], ["0%", "30%"]) }}
         className="absolute bottom-1/4 right-1/4 w-64 h-64 sm:w-96 sm:h-96 bg-secondary/20 rounded-full blur-3xl"
@@ -193,7 +184,6 @@ export function HeroSection() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="relative"
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-primary via-secondary to-accent opacity-20 blur-3xl" />
             <motion.div
               whileHover={{ scale: 1.02, y: -5 }}
               transition={{ duration: 0.3 }}
