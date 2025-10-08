@@ -114,9 +114,9 @@ export function BlogSection() {
                 <Card className="overflow-hidden h-full hover:shadow-2xl transition-all duration-500 group cursor-pointer">
                   {/* Image with gradient overlay */}
                   <div className="relative h-48 overflow-hidden">
-                    <div className={`absolute inset-0 bg-gradient-to-br ${post.gradient} opacity-90`} />
+                    <div className={`absolute inset-0 opacity-90`} />
                     <img
-                      src={`/.jpg?height=300&width=400&query=${encodeURIComponent(post.image)}`}
+                      src={`/pharmaceutical-sales-analytics-dashboard-with-inte.jpg`}
                       alt={post.title}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                     />
