@@ -83,7 +83,7 @@ export function HeroSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative h-screen flex items-center mt-20 md:mt-60 lg:mt-0"
+      className="relative flex items-center mt-10 md:mt-10"
     >
       <motion.div
         style={{ y: useTransform(scrollYProgress, [0, 1], ["0%", "30%"]) }}
@@ -123,7 +123,7 @@ export function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight text-balance"
+              className="text-3xl sm:text-4xl lg:text-3xl xl:text-5xl font-bold leading-tight text-balance"
             >
               Transform Your Business Sales with{" "}
               <span className="bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
@@ -136,7 +136,7 @@ export function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-base sm:text-lg text-muted-foreground leading-relaxed text-pretty"
+              className="text-base sm:text-md lg:text-lg text-muted-foreground leading-relaxed text-pretty"
             >
               Hoover Analytica is a powerful, map-based application designed for
               pharmaceutical companies to analyze customer sales, monitor doctor
