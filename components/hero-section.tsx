@@ -83,7 +83,7 @@ export function HeroSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative h-screen flex items-center pt-10 md:pt-20 lg:pt-30"
+      className="relative h-screen flex items-center pt-10 md:pt-20"
     >
       <div
         className="absolute inset-0"
@@ -184,7 +184,7 @@ export function HeroSection() {
               <img
                 src="/pharmaceutical-sales-analytics-dashboard-with-inte.jpg"
                 alt="Hoover Analytica Dashboard"
-                className="w-full h-auto"
+                className="w-full max-h-[500px] object-cover"
               />
             </motion.div>
           </motion.div>
