@@ -83,21 +83,13 @@ export function HeroSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative flex items-center mt-10 md:mt-10"
+      className="relative h-screen flex items-center pt-10 md:pt-20 lg:pt-30"
     >
-      <motion.div
-        style={{ y: useTransform(scrollYProgress, [0, 1], ["0%", "30%"]) }}
-        className="absolute bottom-1/4 right-1/4 w-64 h-64 sm:w-96 sm:h-96 bg-secondary/20 rounded-full blur-3xl"
-        animate={{
-          x: [0, -30, 0],
-          y: [0, 50, 0],
-          scale: [1, 1.1, 1],
-        }}
-        transition={{
-          duration: 10,
-          repeat: Number.POSITIVE_INFINITY,
-          ease: "easeInOut",
-          delay: 2,
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(111.84deg, #FBFBFB 34.62%, rgba(131, 58, 180, 0.22) 66.09%, rgba(252, 176, 69, 0.5) 95.33%)",
         }}
       />
 
@@ -107,7 +99,7 @@ export function HeroSection() {
       >
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Left Column - Content */}
-          <div className="space-y-6 sm:space-y-8">
+          <div className="space-y-6 sm:space-y-5">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -136,7 +128,7 @@ export function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-base sm:text-md lg:text-lg text-muted-foreground leading-relaxed text-pretty"
+              className="text-base sm:text-md text-muted-foreground leading-relaxed text-pretty"
             >
               Hoover Analytica is a powerful, map-based application designed for
               pharmaceutical companies to analyze customer sales, monitor doctor
@@ -187,7 +179,7 @@ export function HeroSection() {
             <motion.div
               whileHover={{ scale: 1.02, y: -5 }}
               transition={{ duration: 0.3 }}
-              className="relative rounded-2xl overflow-hidden border border-border/50 backdrop-blur-sm bg-card/50 shadow-2xl hover:shadow-primary/20"
+              className="relative rounded-2xl overflow-hidden backdrop-blur-sm bg-card/50 shadow-2xl hover:shadow-primary/20"
             >
               <img
                 src="/pharmaceutical-sales-analytics-dashboard-with-inte.jpg"
