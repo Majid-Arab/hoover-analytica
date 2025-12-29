@@ -71,15 +71,12 @@ export function FeaturesSection() {
 
   return (
     <section id="features" ref={sectionRef} className="py-20 bg-background">
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+      <div className="absolute top-0 left-0 right-0 bg-gradient-to-r from-transparent via-border to-transparent" />
 
-      <div className="z-10 container mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="z-10 container mx-auto">
         <div className="flex flex-col lg:flex-row">
-
-          <div>
-            <motion.div
-              className="lg:sticky lg:top-50 lg:pb-32 space-y-6"
-            >
+          <div className="text-center lg:text-start w-full lg:w-2/4">
+            <motion.div className="lg:sticky lg:top-50 lg:pb-32 space-y-6">
               <motion.div
                 initial={{ opacity: 0, x: -50 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -94,9 +91,9 @@ export function FeaturesSection() {
                   <br />
                   for Your Success
                 </h2>
-                <p className="text-lg text-muted-foreground leading-relaxed">
-                  Everything you need to manage pharmaceutical sales <br />{" "}
-                  operations efficiently
+                <p className="text-lg text-muted-foreground leading-relaxed lg:max-w-md">
+                  Everything you need to manage pharmaceutical sales operations
+                  efficiently
                 </p>
               </motion.div>
 
@@ -137,7 +134,8 @@ export function FeaturesSection() {
               </div>
             </motion.div>
           </div>
-          <div className="lg:col-span-8 space-y-8">
+
+          <div className=" space-y-8">
             {features.map((feature, index) => {
               const Icon = feature.icon;
 
@@ -161,9 +159,9 @@ export function FeaturesSection() {
                   whileInView={{ opacity: 1, y: 0.5 }}
                   viewport={{ once: true, margin: "-100px" }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className="sticky top-20"
+                  className="sticky top-20 "
                 >
-                  <Card className="group relative p-8 overflow-hidden border-2 hover:border-primary/50 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/20">
+                  <Card className="group relative p-8 h-[400px] overflow-hidden border-2 hover:border-primary/50 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/20">
                     {/* Animated Gradient Background */}
                     <div
                       className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-700`}
