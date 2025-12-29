@@ -83,7 +83,7 @@ export function HeroSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative h-screen flex items-center pt-10 md:pt-20"
+      className="relative h-screen flex items-center pt-50 md:pt-20"
     >
       <div
         className="absolute inset-0"
@@ -162,8 +162,8 @@ export function HeroSection() {
                   variant="outline"
                   className="border-2 hover:text-black hover:bg-primary/5 transition-all group w-full sm:w-auto bg-transparent"
                 >
-                  <Play className="mr-2 w-4 h-4 group-hover:scale-110 transition-transform" />
                   Explore Features
+                  <Play className="mr-2 w-4 h-4 group-hover:scale-110 transition-transform" />
                 </Button>
               </motion.div>
             </motion.div>
