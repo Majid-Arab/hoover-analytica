@@ -5,15 +5,25 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { motion } from "framer-motion";
-import { ThemeSwitcher } from "@/components/theme-switcher";
+import { usePathname, useRouter } from "next/navigation";
 import { useTheme } from "@/contexts/theme-context";
 import { colorThemes } from "@/lib/theme-config";
 
 export function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { colorTheme } = useTheme();
-
   const gradientClass = colorThemes[colorTheme].gradient;
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const handleNavClick = (sectionId: string) => {
+    if (pathname !== "/") {
+      router.push(`/#${sectionId}`);
+    } else {
+      const el = document.getElementById(sectionId);
+      el?.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   return (
     <>
@@ -37,33 +47,33 @@ export function Navigation() {
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center gap-8">
-              <Link
-                href="#features"
+              <button
+                onClick={() => handleNavClick("features")}
                 className="text-sm font-medium hover:text-primary transition-colors relative group"
               >
                 Features
                 <span
                   className={`absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r ${gradientClass} group-hover:w-full transition-all duration-300`}
                 />
-              </Link>
-              <Link
-                href="#pricing"
+              </button>
+              <button
+                onClick={() => handleNavClick("pricing")}
                 className="text-sm font-medium hover:text-primary transition-colors relative group"
               >
                 Pricing
                 <span
                   className={`absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r ${gradientClass} group-hover:w-full transition-all duration-300`}
                 />
-              </Link>
-              <Link
-                href="#about"
+              </button>
+              <button
+                onClick={() => handleNavClick("about")}
                 className="text-sm font-medium hover:text-primary transition-colors relative group"
               >
                 About
                 <span
                   className={`absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r ${gradientClass} group-hover:w-full transition-all duration-300`}
                 />
-              </Link>
+              </button>
               <Link
                 href="/blog"
                 className="text-sm font-medium hover:text-primary transition-colors relative group"
@@ -73,15 +83,15 @@ export function Navigation() {
                   className={`absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r ${gradientClass} group-hover:w-full transition-all duration-300`}
                 />
               </Link>
-              <Link
-                href="#contact"
+              <button
+                onClick={() => handleNavClick("contact")}
                 className="text-sm font-medium hover:text-primary transition-colors relative group"
               >
                 Contact
                 <span
                   className={`absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r ${gradientClass} group-hover:w-full transition-all duration-300`}
                 />
-              </Link>
+              </button>
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -120,27 +130,30 @@ export function Navigation() {
               className="md:hidden py-4 border-t border-border"
             >
               <div className="flex flex-col gap-4">
-                <Link
-                  href="#features"
+                <button
                   className="text-sm font-medium hover:text-primary transition-colors"
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  onClick={() => {
+                    setIsMobileMenuOpen(false), handleNavClick("features");
+                  }}
                 >
                   Features
-                </Link>
-                <Link
-                  href="#pricing"
+                </button>
+                <button
                   className="text-sm font-medium hover:text-primary transition-colors"
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  onClick={() => {
+                    setIsMobileMenuOpen(false), handleNavClick("pricing");
+                  }}
                 >
                   Pricing
-                </Link>
-                <Link
-                  href="#about"
+                </button>
+                <button
                   className="text-sm font-medium hover:text-primary transition-colors"
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  onClick={() => {
+                    setIsMobileMenuOpen(false), handleNavClick("about");
+                  }}
                 >
                   About
-                </Link>
+                </button>
                 <Link
                   href="/blog"
                   className="text-sm font-medium hover:text-primary transition-colors"
@@ -148,13 +161,14 @@ export function Navigation() {
                 >
                   Blog
                 </Link>
-                <Link
-                  href="#contact"
+                <button
                   className="text-sm font-medium hover:text-primary transition-colors"
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  onClick={() => {
+                    setIsMobileMenuOpen(false), handleNavClick("contact");
+                  }}
                 >
                   Contact
-                </Link>
+                </button>
                 <Button
                   className={`bg-gradient-to-r ${gradientClass} hover:opacity-90 transition-opacity w-full`}
                 >
