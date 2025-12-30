@@ -1,40 +1,24 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
-import { motion, useScroll, useSpring } from "framer-motion";
+import { motion } from "framer-motion";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import { useTheme } from "@/contexts/theme-context";
 import { colorThemes } from "@/lib/theme-config";
 
 export function Navigation() {
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { colorTheme } = useTheme();
-
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001,
-  });
-
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     setIsScrolled(window.scrollY > 20);
-  //   };
-  //   window.addEventListener("scroll", handleScroll);
-  //   return () => window.removeEventListener("scroll", handleScroll);
-  // }, []);
 
   const gradientClass = colorThemes[colorTheme].gradient;
 
   return (
     <>
       <nav
-        className={`absolute top-0 left-0 right-0 z-50 transition-all duration-300 bg-transparent`}
+        className={`absolute top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-lg lg:bg-transparent`}
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 sm:h-20">
@@ -98,7 +82,6 @@ export function Navigation() {
                   className={`absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r ${gradientClass} group-hover:w-full transition-all duration-300`}
                 />
               </Link>
-              <ThemeSwitcher />
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -113,7 +96,6 @@ export function Navigation() {
 
             {/* Mobile Menu Button */}
             <div className="md:hidden flex items-center gap-2">
-              <ThemeSwitcher />
               <motion.button
                 whileTap={{ scale: 0.9 }}
                 className="p-2"
