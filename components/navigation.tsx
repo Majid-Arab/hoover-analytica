@@ -131,7 +131,7 @@ export function Navigation() {
             >
               <div className="flex flex-col gap-4">
                 <button
-                  className="text-sm font-medium hover:text-primary transition-colors"
+                  className="text-start text-sm font-medium hover:text-primary transition-colors"
                   onClick={() => {
                     setIsMobileMenuOpen(false), handleNavClick("features");
                   }}
@@ -139,7 +139,7 @@ export function Navigation() {
                   Features
                 </button>
                 <button
-                  className="text-sm font-medium hover:text-primary transition-colors"
+                  className="text-start text-sm font-medium hover:text-primary transition-colors"
                   onClick={() => {
                     setIsMobileMenuOpen(false), handleNavClick("pricing");
                   }}
@@ -147,7 +147,7 @@ export function Navigation() {
                   Pricing
                 </button>
                 <button
-                  className="text-sm font-medium hover:text-primary transition-colors"
+                  className="text-start text-sm font-medium hover:text-primary transition-colors"
                   onClick={() => {
                     setIsMobileMenuOpen(false), handleNavClick("about");
                   }}
@@ -162,7 +162,7 @@ export function Navigation() {
                   Blog
                 </Link>
                 <button
-                  className="text-sm font-medium hover:text-primary transition-colors"
+                  className="text-start text-sm font-medium hover:text-primary transition-colors"
                   onClick={() => {
                     setIsMobileMenuOpen(false), handleNavClick("contact");
                   }}
