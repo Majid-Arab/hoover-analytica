@@ -83,7 +83,7 @@ export function HeroSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative h-screen flex items-center pt-50 md:pt-20"
+      className="relative min-h-screen lg:h-screen flex items-center overflow-hidden pt-24 md:pt-20 lg:pt-0"
     >
       <div
         className="absolute inset-0"
@@ -92,19 +92,50 @@ export function HeroSection() {
             "linear-gradient(111.84deg, #FBFBFB 34.62%, rgba(131, 58, 180, 0.22) 66.09%, rgba(252, 176, 69, 0.5) 95.33%)",
         }}
       />
+      <canvas ref={canvasRef} className="absolute inset-0 opacity-40" />
+
+      <motion.div
+        style={{ y }}
+        className="absolute top-1/4 left-1/4 w-64 h-64 sm:w-96 sm:h-96 bg-purple-500/20 rounded-full blur-3xl"
+        animate={{
+          x: [0, 50, 0],
+          y: [0, 30, 0],
+          scale: [1, 1.2, 1],
+        }}
+        transition={{
+          duration: 8,
+          repeat: Number.POSITIVE_INFINITY,
+          ease: "easeInOut",
+        }}
+      />
+      <motion.div
+        style={{ y: useTransform(scrollYProgress, [0, 1], ["0%", "30%"]) }}
+        className="absolute bottom-1/4 right-1/4 w-64 h-64 sm:w-96 sm:h-96 bg-pink-500/20 rounded-full blur-3xl"
+        animate={{
+          x: [0, -30, 0],
+          y: [0, 50, 0],
+          scale: [1, 1.1, 1],
+        }}
+        transition={{
+          duration: 10,
+          repeat: Number.POSITIVE_INFINITY,
+          ease: "easeInOut",
+          delay: 2,
+        }}
+      />
 
       <motion.div
         style={{ opacity }}
         className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8"
       >
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
           {/* Left Column - Content */}
-          <div className="space-y-6 sm:space-y-5">
+          <div className="space-y-4 sm:space-y-6">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="inline-block px-4 py-2 rounded-full bg-primary/10 border border-primary/20 backdrop-blur-sm"
+              className="inline-block px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-primary/10 border border-primary/20 backdrop-blur-sm"
             >
               <span className="text-xs sm:text-sm font-medium bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
                 Powered by Exponent Engineers
@@ -115,7 +146,7 @@ export function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-3xl sm:text-4xl lg:text-3xl xl:text-5xl font-bold leading-tight text-balance"
+              className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight text-balance"
             >
               Transform Your Business Sales with{" "}
               <span className="bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
@@ -128,7 +159,7 @@ export function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-base sm:text-md text-muted-foreground leading-relaxed text-pretty"
+              className="text-sm sm:text-base lg:text-lg text-muted-foreground leading-relaxed text-pretty"
             >
               Hoover Analytica is a powerful, map-based application designed for
               pharmaceutical companies to analyze customer sales, monitor doctor
@@ -140,14 +171,15 @@ export function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="flex flex-col sm:flex-row items-start sm:items-center gap-4"
+              className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 pt-2"
             >
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
                 <Button
-                  className={`bg-gradient-to-r ${gradientClass} hover:opacity-90 transition-opacity shadow-lg hover:shadow-xl`}
+                  size="lg"
+                  className={`bg-gradient-to-r ${gradientClass} hover:opacity-90 transition-all group w-full sm:w-auto shadow-xl hover:shadow-2xl text-base`}
                 >
                   Request a Demo
                   <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -160,10 +192,10 @@ export function HeroSection() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="border-2 hover:text-black hover:bg-primary/5 transition-all group w-full sm:w-auto bg-transparent"
+                  className="border-2 hover:bg-primary/5 transition-all group w-full sm:w-auto bg-transparent text-base"
                 >
-                  Explore Features
                   <Play className="mr-2 w-4 h-4 group-hover:scale-110 transition-transform" />
+                  Explore Features
                 </Button>
               </motion.div>
             </motion.div>
@@ -174,7 +206,7 @@ export function HeroSection() {
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="relative"
+            className="relative py-14 lg:py-0 "
           >
             <motion.div
               whileHover={{ scale: 1.02, y: -5 }}
@@ -184,7 +216,7 @@ export function HeroSection() {
               <img
                 src="/pharmaceutical-sales-analytics-dashboard-with-inte.jpg"
                 alt="Hoover Analytica Dashboard"
-                className="w-full max-h-[500px] object-cover"
+                className="w-full h-[350px] lg:max-h-[500px] object-cover"
               />
             </motion.div>
           </motion.div>
