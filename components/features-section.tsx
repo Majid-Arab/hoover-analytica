@@ -62,6 +62,7 @@ const features = [
 
 export function FeaturesSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [activeCard, setActiveCard] = useState(0);
 
   const { scrollYProgress } = useScroll({
@@ -69,163 +70,178 @@ export function FeaturesSection() {
     offset: ["start end", "end start"],
   });
 
+  useEffect(() => {
+    return scrollYProgress.on("change", () => {
+      const viewportCenter = window.innerHeight / 2;
+
+      let closestIndex = 0;
+      let closestDistance = Infinity;
+
+      cardRefs.current.forEach((card, index) => {
+        if (!card) return;
+
+        const rect = card.getBoundingClientRect();
+        const distance = Math.abs(rect.top - viewportCenter);
+
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          closestIndex = index;
+        }
+      });
+
+      setActiveCard(closestIndex);
+    });
+  }, [scrollYProgress]);
+
   return (
     <section id="features" ref={sectionRef} className="py-20 bg-background">
       <div className="absolute top-0 left-0 right-0 bg-gradient-to-r from-transparent via-border to-transparent" />
 
-      <div className="z-10 container mx-auto">
-        <div className="flex flex-col lg:flex-row">
-          <div className="text-center lg:text-start w-full lg:w-2/4">
-            <motion.div className="lg:sticky lg:top-50 lg:pb-32 space-y-6">
-              <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-              >
-                <h2 className="text-4xl md:text-5xl font-bold mb-6 text-balance leading-tight">
+      {/* <div className= ""> */}
+      <div className="relative z-10 container mx-auto flex flex-col lg:flex-row px-4 sm:px-6 lg:px-8">
+        <div className="text-center lg:text-start w-full lg:w-2/4">
+          <motion.div className="lg:sticky lg:top-50 lg:pb-32 space-y-6">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight text-center lg:text-left max-w-xl w-full">
+                <span className="whitespace-nowrap">
                   Powerful{" "}
                   <span className="bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
                     Features
-                  </span>{" "}
-                  <br />
-                  for Your Success
-                </h2>
-                <p className="text-lg text-muted-foreground leading-relaxed lg:max-w-md">
-                  Everything you need to manage pharmaceutical sales operations
-                  efficiently
-                </p>
-              </motion.div>
+                  </span>
+                </span>{" "}
+                <span className="whitespace-nowrap">for Your Success</span>
+              </h2>
 
-              {/* Feature navigation dots */}
-              <div className="hidden lg:flex flex-col gap-4">
-                {features.map((feature, index) => (
-                  <button
-                    key={index}
-                    onClick={() => {
-                      const card = document.querySelector(
-                        `[data-index="${index}"]`
-                      );
-                      card?.scrollIntoView({
-                        behavior: "smooth",
-                        block: "center",
-                      });
-                    }}
-                    className={`text-left transition-all duration-300 ${
-                      activeCard === index
-                        ? "opacity-100"
-                        : "opacity-40 hover:opacity-70"
-                    }`}
-                  >
-                    <div className="flex items-center gap-3">
-                      <div
-                        className={`h-1 rounded-full transition-all duration-300 ${
-                          activeCard === index
-                            ? "w-12 bg-gradient-to-r from-primary to-secondary"
-                            : "w-6 bg-border"
-                        }`}
-                      />
-                      <span className="text-sm font-medium">
-                        {feature.title}
-                      </span>
-                    </div>
-                  </button>
-                ))}
-              </div>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Everything you need to manage pharmaceutical sales operations
+                efficiently
+              </p>
             </motion.div>
-          </div>
 
-          <div className=" space-y-8">
-            {features.map((feature, index) => {
-              const Icon = feature.icon;
-
-              const targetScale = 1 - (features.length - index) * 0.05;
-              const imageScale = useTransform(scrollYProgress, [0, 1], [2, 1]);
-              const scale = useTransform(
-                scrollYProgress,
-                [index * 0.25, 1],
-                [1, targetScale]
-              );
-
-              return (
-                <motion.div
+            {/* Feature navigation dots */}
+            <div className="hidden lg:flex flex-col gap-4">
+              {features.map((feature, index) => (
+                <button
                   key={index}
-                  data-index={index}
-                  style={{
-                    scale,
-                    top: `calc(-5vh + ${100 + index * 25}px)`,
-                  }}
-                  initial={{ opacity: 0, y: 50 }}
-                  whileInView={{ opacity: 1, y: 0.5 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className="sticky top-20 "
+                  className={`text-left transition-all duration-300 ${
+                    activeCard === index
+                      ? "opacity-100"
+                      : "opacity-40 hover:opacity-70"
+                  }`}
                 >
-                  <Card className="group relative p-8 h-[400px] overflow-hidden border-2 hover:border-primary/50 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/20">
-                    {/* Animated Gradient Background */}
+                  <div className="flex items-center gap-3">
                     <div
-                      className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-700`}
+                      className={`h-1 rounded-full transition-all duration-300 ${
+                        activeCard === index
+                          ? "w-12 bg-gradient-to-r from-primary to-secondary"
+                          : "w-6 bg-border"
+                      }`}
                     />
+                    <span className="text-sm font-medium">{feature.title}</span>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </motion.div>
+        </div>
 
-                    <div className="relative z-10">
-                      <div className="flex flex-col gap-6">
-                        {/* Icon & Content */}
-                        <div className="flex-1">
-                          <div
-                            className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${feature.gradient} p-[2px] mb-4 group-hover:scale-110 transition-transform duration-300`}
-                          >
-                            <div className="w-full h-full rounded-2xl bg-card flex items-center justify-center">
-                              <Icon className="w-7 h-7 text-primary" />
-                            </div>
+        <div className="space-y-8">
+          {features.map((feature, index) => {
+            const Icon = feature.icon;
+
+            const targetScale = 1 - (features.length - index) * 0.05;
+            const imageScale = useTransform(scrollYProgress, [0, 1], [2, 1]);
+            const scale = useTransform(
+              scrollYProgress,
+              [index * 0.25, 1],
+              [1, targetScale]
+            );
+
+            return (
+              <motion.div
+                key={index}
+                ref={(el) => {
+                  cardRefs.current[index] = el;
+                }}
+                data-index={index}
+                style={{
+                  scale,
+                  top: `calc(-5vh + ${100 + index * 25}px)`,
+                }}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0.5 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                className="sticky top-24"
+              >
+                <Card className="group relative p-6 border-2 hover:border-primary/50 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/20">
+                  {/* Animated Gradient Background */}
+                  <div
+                    className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-700`}
+                  />
+
+                  <div className="relative z-10">
+                    <div className="flex flex-col gap-6">
+                      {/* Icon & Content */}
+                      <div className="flex-1">
+                        <div
+                          className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${feature.gradient} p-[2px] mb-4 group-hover:scale-110 transition-transform duration-300`}
+                        >
+                          <div className="w-full h-full rounded-2xl bg-card flex items-center justify-center">
+                            <Icon className="w-7 h-7 text-primary" />
                           </div>
-
-                          <h3 className="text-2xl font-bold mb-3 group-hover:text-primary transition-colors">
-                            {feature.title}
-                          </h3>
-                          <p className="text-base text-muted-foreground mb-4 leading-relaxed">
-                            {feature.description}
-                          </p>
-
-                          <ul className="space-y-2 mb-6">
-                            {feature.details.map((detail, i) => (
-                              <li
-                                key={i}
-                                className="flex items-center gap-2 text-sm"
-                              >
-                                <div
-                                  className={`w-1.5 h-1.5 rounded-full bg-gradient-to-r ${feature.gradient}`}
-                                />
-                                <span className="text-muted-foreground">
-                                  {detail}
-                                </span>
-                              </li>
-                            ))}
-                          </ul>
                         </div>
 
-                        {/* Feature Image */}
-                        <div className="w-full h-64 rounded-xl overflow-hidden border border-border group-hover:border-primary/50 transition-all duration-500">
-                          <motion.img
-                            src={`/pharmaceutical-sales-analytics-dashboard-with-inte.jpg`}
-                            style={{ scale: imageScale }}
-                            alt={feature.title}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                          />
-                        </div>
+                        <h3 className="text-2xl font-bold mb-3 group-hover:text-primary transition-colors">
+                          {feature.title}
+                        </h3>
+                        <p className="text-base text-muted-foreground mb-4 leading-relaxed">
+                          {feature.description}
+                        </p>
+
+                        <ul className="space-y-2 mb-6">
+                          {feature.details.map((detail, i) => (
+                            <li
+                              key={i}
+                              className="flex items-center gap-2 text-sm"
+                            >
+                              <div
+                                className={`w-1.5 h-1.5 rounded-full bg-gradient-to-r ${feature.gradient}`}
+                              />
+                              <span className="text-muted-foreground">
+                                {detail}
+                              </span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      {/* Feature Image */}
+                      <div className="w-full max-h-60 rounded-xl overflow-hidden border border-border group-hover:border-primary/50 transition-all duration-500">
+                        <motion.img
+                          src="/pharmaceutical-sales-analytics-dashboard-with-inte.jpg"
+                          alt={feature.title}
+                          style={{
+                            scale: imageScale,
+                            transformOrigin: "center center",
+                          }}
+                          className="w-full h-full object-cover"
+                        />
                       </div>
                     </div>
-
-                    {/* Hover Glow Effect */}
-                    <div
-                      className={`absolute -bottom-20 -right-20 w-40 h-40 bg-gradient-to-br ${feature.gradient} rounded-full blur-3xl opacity-0 group-hover:opacity-30 transition-opacity duration-700`}
-                    />
-                  </Card>
-                </motion.div>
-              );
-            })}
-          </div>
+                  </div>
+                </Card>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
+      {/* </div> */}
 
       <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
     </section>
